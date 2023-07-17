@@ -1,0 +1,192 @@
+/* CSS Code by Benjamin Ell-Jones  */
+
+:root{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+  }
+  body{
+    min-height: 100vh ;
+    overflow-x:hidden;
+  }
+  h1{
+      font-size: 45px;
+  }
+  p{
+    font-size: 35px;
+  }
+  h2{
+    font-size: 20px;
+  }
+  .GUser{
+    font-size: 20px;
+  }
+  
+  .RUser{
+    font-size: 20px;
+  }
+  .MEA{
+    font-size: 20px;
+  }
+  .TP{
+    font-size: 20px;
+  }
+  .btn{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--black1);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+    margin-top: 20px;
+  }
+  .header{
+    display:flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  
+  .headerLogo{
+    margin-left: 100px;
+    margin-top: 25px;
+  }
+  .navigate-tab{
+    display: flex;
+    font-weight: 300;
+    padding:20px
+  }
+  
+  .navigate-tab a{
+    position: relative;
+    margin: 15px 15px;
+    color: rgb(15, 13, 13);
+    text-decoration: none;
+    font-size: 1em;
+  }
+.container0{
+    position: relative;
+    width:100%;
+    left:10%;
+}
+
+/* main */
+.main0{
+    position: absolute;
+    height: 60px;
+    width: 70%;
+    background: var(--white);
+}
+
+.details0 .subDetails0{
+    position: relative;
+    min-height: 30px;
+    background-color: var(--white);
+    padding:20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+.container1{
+    top:250px;
+    position: relative;
+    width:100%;
+    left:10%;
+}
+
+/* main */
+.main1{
+    position: absolute;
+    height: 50%;
+    width: 30%;
+    background: var(--white);
+}
+
+.details1 .subDetails1{
+    position: relative;
+    min-height: 350px;
+    background-color: var(--white);
+    padding:20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+
+.container2{
+    top:250px;
+    position: relative;
+    width:100%;
+    left:50%;
+}
+
+/* main */
+.main2{
+    position: absolute;
+    height: 30%;
+    width: 30%;
+    background: var(--white);
+}
+
+.details2 .subDetails2{
+    position: relative;
+    min-height: 350px;
+    background-color: var(--white);
+    padding:20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+
+.container3{
+    top:560px;
+    position: relative;
+    width:100%;
+    left:10%; 
+}
+
+/* main */
+.main3{
+    position: absolute;
+    height: 50%;
+    width: 30%;
+    background: var(--white);
+}
+
+.details3 .subDetails3{
+    position: relative;
+    min-height: 350px;
+    background-color: var(--white);
+    padding:20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+.container4{
+    position: relative;
+    width:100%;
+    top:560px;
+    left:50%;
+}
+
+/* main */
+.main4{
+    position: absolute;
+    height: 50%;
+    width: 30%;
+    background: var(--white);
+}
+
+.details4 .subDetails4{
+    position: relative;
+    min-height: 350px;
+    background-color: var(--white);
+    padding:20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+  
+  
+  
+  

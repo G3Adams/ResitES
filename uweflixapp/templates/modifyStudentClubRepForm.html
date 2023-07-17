@@ -1,0 +1,113 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <title>Student/Club Rep</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/cinemaManagerForm.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+</div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/club/modifyUser/{{userId}}/{{clubId}}/" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+
+            <h1>Student/ClubRep Form</h1>
+            <br>
+            <div class="UserDetails">
+              <div>
+                
+              <br>
+                <label for="inputTitle">First Name</label>
+                <input type="text" id="firstName" name="firstName" maxlength="100" value="{{firstName}}" required>
+              </br>
+              <br>
+                <label for="inputTitle">Last Name</label>
+                <input type="text" id="lastName" name="lastName" maxlength="100" value="{{lastName}}" required>
+              </br> 
+              <br>
+                <label for="inputTitle">Birth Date</label>
+                <input type="number" id="birthDay" name="birthDay" value="{{birthDay}}" placeholder="DD" max="31" maxlength="2" required>
+                <input type="number" id="birthMonth" name="birthMonth" value="{{birthMonth}}" placeholder="MM" max="12" maxlength="2" required>
+                <input type="text" id="birthYear" name="birthYear" value="{{birthYear}}" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" required>
+              </br>  
+              <br>
+              <label for="inputTitle">User Type</label>
+              <select id="userType" name="userType" maxlength="50" value="{{userType}}" required>
+                {% if userType == "student" %}
+                <option value="student">Student</option>
+                <option value="clubrep">ClubRep</option>
+                {% endif %}
+                {% if userType == "clubrep" %}
+                <option value="clubrep">ClubRep</option>
+                <option value="student">Student</option>
+                {% endif %}
+              </select>
+              <br>
+                <label for="inputTitle">Discount Rate</label>
+                <input type="text" id="discountRate" name="discountRate" max="90" maxlength="100" value="{{discountRate}}">
+              </br> 
+              <br>
+                <label for="inputTitle">Credit</label>
+                <input type="text" id="credit" name="credit" maxlength="10" value="{{credit}}" required>
+              </br> 
+              <br>
+                <label for="inputTitle">Name On Card</label>
+                <input type="text" id="nameOnCard" name="nameOnCard" maxlength="100" value="{{nameOnCard}}">
+              </br> 
+
+              <br>
+                <label for="inputTitle">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" maxlength="16" placeholder="****************" pattern="[0-9]{16}" value="{{cardNumber}}">
+              </br> 
+
+              <br>
+                <label for="inputTitle">Month</label>
+                <input type="number" id="month" name="month" placeholder="MM" max="12" maxlength="2" value="{{month}}">
+              </br> 
+              <br>
+                <label for="inputTitle">Year</label>
+                <input type="text" id="year" name="year" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" value="{{year}}">
+              </br>
+              </div>
+              <br>
+              <input class="btn" type="submit" name="action" value="submit">
+              <input class="btn" type="submit" name="action" value="delete"> 
+              </div>
+            </div>          
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+      
+    
+  </body>
+</html>

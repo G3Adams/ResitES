@@ -1,0 +1,384 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{% static 'css/buyTicketPage.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Document</title>
+  <style>
+    .submitBtn{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 21px;
+      border-radius: 6px;
+      border: none;
+
+      color: #fff;
+      background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+      background-origin: border-box;
+      box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    }
+
+
+
+  </style>
+</head>
+<body>
+  {% if user %}
+  <div class="container">
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="/cancellation">cancellation</a>
+          <p>|</p>
+          <a href="/studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          <a href="/logout">logout</a>
+      </nav>
+    </div> 
+    <div class="checkOutHeading">
+      <div class="pageTitle">
+        <span>Select Quantity</span>
+      </div>
+    </div>
+    <form action="/checkOut/{{showTime.id}}/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="mainSection">
+        <div class="leftWindow">
+          <div class="selectQuantityWindow">
+            <div class="Student">
+              <label for="guestSeatsQty">Qty Student Seats : </label>
+              <select id='studentSeatsQty' name="inputStudentQty" required="required">
+                  <option disabled selected value>Select Seats</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+            </div>
+            <div class="Guest">
+              <label for="seats">Qty Guest Seats : </label>
+              <select id='guestSeatsQty' name="inputGuestQty">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+          <div class="leftWindowBottom">
+            <div class="totalPrice">
+              <span>Price:</span>
+              <span id="showPrice">0.0</span>
+              <input class="hidden" id="inputTotalPrice" name="inputTotalPrice" value="0.00"> 
+            </div>
+            <div class="checkOutBtn">
+              <input type="hidden" name="inputShowDate" value="{{showDate}}">
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button class="submitBtn" id="checkOutBtn">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+    {% if not messages %}
+      </form>
+    {% endif %}
+      <div class="filmDetails">
+        
+        <div>
+          {% if film.image %}
+            <img src="{{ film.image.url }}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+          {% else  %}
+            <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+          {% endif %}
+        </div>
+        <h2>{{film.title}}</h2>
+        <span>Duration: {{film.duration}}</span>
+        <span>Price: {{showTime.price}}</span>
+      </div>
+    </div>
+    {% if messages %}
+      <input type="hidden" name="inputCreditCardDone" value="True">
+      <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+      </ul>
+      <div class="creditCardInfo">
+        <div class="creditCardHeader">
+          <h2>Payment Details</h2>
+        </div>
+        <div class="paymentCardBackgroud">
+          <div class="paymentInputWindow">
+            <div class="paymentInput">
+              <h3>Billing Address</h3>
+              <div>
+                <label for="firstName"><i class="fa fa-user"></i> FirstName</label>
+                <input type="text" id="firstName" name="firstname" placeholder="Tang">
+                <label>Second Name</label>
+                <input type="text" id="firstName" name="firstname" placeholder="Zheng Kuay">
+              </div>
+              <label for="email"><i class="fa fa-envelope"></i> Email</label>
+              <input type="text" id="email" name="email" placeholder="zhengKuay@example.com">
+              <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+              <input type="text" id="adr" name="address" placeholder="27, Caroll Court, Bristol">
+              <label for="city"><i class="fa fa-institution"></i> City</label>
+              <input type="text" id="city" name="city" placeholder="Bristol">
+  
+              <div>
+                <div>
+                  <label for="postcode">Zip</label>
+                  <input type="text" id="postcode" name="postcode" placeholder="BS16 1US">
+                </div>
+              </div>
+            </div>
+            <div class="paymentInput">
+              <h3>Payment</h3>
+              <label for="cname">Name on Card</label>
+              <input type="text" id="cname" name="cardname" placeholder="Name">
+              <label for="ccnum">Credit card number</label>
+              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-1111-1111-1111">
+              <label for="expmonth">Exp Month</label>
+              <input type="text" id="expmonth" name="expmonth" placeholder="Month">
+  
+              <div>
+                <div>
+                  <label for="expyear">Exp Year</label>
+                  <input type="text" id="expyear" name="expyear" placeholder="Year">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" name="cvv" placeholder="111">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button class="submitBtn">
+            Submit
+          </button>
+        </div>
+      </div>
+      {% if messages %}
+        </form>
+      {% endif %}
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="container">
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="/cancellation">cancellation</a>
+          <p>|</p>
+          <a href="/studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="/cinemaManager">Cinema Manager Home</a>
+          <p>|</p>
+          <a href="/login">login</a>
+      </nav>
+    </div> 
+    <div class="checkOutHeading">
+      <div class="pageTitle">
+        <span>Select Quantity</span>
+      </div>
+    </div>
+    <div>
+      <form action="/checkOut/{{showTime.id}}/" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="mainSection">
+          <div class="leftWindow">
+            <div class="selectQuantityWindow">
+              <div class="Guest">
+                <label for="seats">Qty Guest Seats : </label>
+                <select id='guestSeatsQty' name="inputGuestQty" required="required">
+                    <option disabled selected value>Select Seats</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+            <div class="leftWindowBottom">
+              <div class="totalPrice">
+                <span>Price:</span>
+                <span id="showPrice">0.0</span>
+                <input class="hidden" id="inputTotalPrice" name="inputTotalPrice" value="0.00"> 
+              </div>
+              <div class="checkOutBtn">
+                <button class="submitBtn" type="button" id="checkOutBtn">
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="filmDetails">
+            
+            <div>
+              {% if film.image %}
+                <img src="{{ film.image.url }}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+              {% else  %}
+                <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+              {% endif %}
+            </div>
+            <h2>{{film.title}}</h2>
+            <span>Duration: {{film.duration}}</span>
+            <span>Price: {{showTime.price}}</span>
+          </div>
+        </div>
+        {% if messages %}
+          <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="creditCardInfo hidden">
+          <div class="creditCardHeader">
+            <h2>Payment Details</h2>
+          </div>
+          <div class="paymentCardBackgroud">
+            <div class="paymentInputWindow">
+              <div class="paymentInput">
+                <h3>Billing Address</h3>
+                <div>
+                  <label for="firstName"><i class="fa fa-user"></i> FirstName</label>
+                  <input type="text" id="firstName" name="inputFirstName" placeholder="Tang" required>
+                  <label>Second Name</label>
+                  <input type="text" id="firstName" name="inputLastName" placeholder="Zheng Kuay" required>
+                </div>
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" id="email" name="inputEmail" placeholder="zhengKuay@example.com" required>
+                <label for="phtonNum"><i class="fa fa-envelope"></i> Phone</label>
+                <input type="tel" id="phtonNum" name="inputPhone" placeholder="00000000000" required>
+                <!-- <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                <input type="text" id="adr" name="address" placeholder="27, Caroll Court, Bristol">
+                <label for="city"><i class="fa fa-institution"></i> City</label>
+                <input type="text" id="city" name="city" placeholder="Bristol"> -->
+
+                <!-- <div>
+                  <div>
+                    <label for="postcode">Zip</label>
+                    <input type="text" id="postcode" name="postcode" placeholder="BS16 1US">
+                  </div>
+                </div> -->
+              </div>
+              <div class="paymentInput">
+                <h3>Payment</h3>
+                <label for="cname">Name on Card</label>
+                <input type="text" id="cname" name="cardname" placeholder="Name" required>
+                <label for="ccnum">Credit card number</label>
+                <input type="text" id="ccnum" name="cardnumber" placeholder="1111-1111-1111-1111" required>
+                <label for="expmonth">Exp Month</label>
+                <input type="text" id="expmonth" name="expmonth" placeholder="Month" required>
+
+                <div>
+                  <div>
+                    <label for="expyear">Exp Year</label>
+                    <input type="text" id="expyear" name="expyear" placeholder="Year" required>
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="111" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input type="hidden" name="inputShowDate" value="{{showDate}}">
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="submitBtn">
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>  
+  {% endif %}
+  <script>
+
+
+    $(function(){
+      var ticketPrice = "{{showTime.price}}"
+      var totalPrice = 0.0
+      var user = "{{user}}"
+      var sumStudent = 0
+      var totalStudentPrice = 0.0
+      var sumGuest = 0
+      var totalGuestPrice = 0.0
+      var studentTicket = 0
+      var guestTicket = 0
+      var discountRate = "{{user.discountRate}}"
+      
+
+      $('#guestSeatsQty').on('click',function(){
+          console.log($(this).val())
+          sumGuest = parseInt($(this).val())
+          totalGuestPrice = sumGuest * ticketPrice
+          totalPrice = totalGuestPrice + totalStudentPrice
+          $('#showPrice').text(totalPrice)
+          $('#inputTotalPrice').val(totalPrice)
+      })
+
+      $('#studentSeatsQty').on('click',function(){
+          console.log($(this).val())
+          sumStudent = parseInt($(this).val())
+          console.log(discountRate)
+          totalStudentPrice = (sumStudent * ticketPrice) * (1 - (discountRate/100))
+          totalPrice = totalStudentPrice + totalGuestPrice
+          console.log(totalPrice)
+          $('#showPrice').text(totalPrice)
+          $('#inputTotalPrice').val(totalPrice)
+      })
+
+      $('#checkOutBtn').on('click',function(){
+          if(user == "False"){
+            $('.creditCardInfo').removeClass('hidden')
+            $(document).scrollTop($(document).height());
+            $('#checkOutBtn').addClass('hidden')
+          }else{
+            console.log(user)
+            console.log(window.location.href+"/")
+          }
+      })
+
+        
+    });
+  </script>
+</body>
+
+</html>

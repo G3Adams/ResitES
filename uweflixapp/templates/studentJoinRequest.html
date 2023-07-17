@@ -1,0 +1,104 @@
+
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>StudentJoinRequest</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManagerForm.css' %}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+
+     <div class="container">
+  
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/studentJoinRequest" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+
+            <h1>Student Join Request</h1>
+            <br>
+            <div class="mb-3 row">
+              <label for="Email" class="col-sm-2 col-form-label">firstname</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="firstName" id="firstName" maxlength="200" required>
+              </div>
+            <br>
+            <br>
+            <div class="mb-3 row">
+              <label for="CancellationNum" class="col-sm-2 col-form-label">lastname</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="lastName" id="lastName" maxlength="200" required>
+            </div>
+            
+           
+              <div class="mb-3 row">
+                <label for="inputTitle">Birth Date</label>
+                <input type="number" id="birthDay" name="birthDay" placeholder="DD" max="31" maxlength="2" required>
+                <input type="number" id="birthMonth" name="birthMonth" placeholder="MM" max="12" maxlength="2" required>
+                <input type="number" id="birthYear" name="birthYear" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" required>
+              </div>
+              
+                <br>
+              </br> 
+            
+
+            <div class="mb-3 row">
+              <label for="inputTitle">Choose Club</label>
+              <select id="club" name="club" maxlength="50">
+                {% block content2 %}
+                {%for clubName in clubs%} 
+                <tr>
+                <option value="{{clubName.name}}">{{clubName.name}}</option>
+                </tr>
+                {% endfor %}
+                {% endblock content2 %}
+              </select> 
+            </div>
+
+            <br>
+            <br>
+
+            <div class="mb-3 row">
+              <label for="inputTitle">User Type</label>
+              <select id="userType" name="userType" maxlength="50" required>
+                <option value="student">Student</option>
+                <option value="clubrep">ClubRep</option>
+              </select> 
+              </div>
+            </div>
+            
+            <div class="mb-3 row">
+              <div class="col-sm-10">
+                <label for="CancellationNum" class="col-sm-2 col-form-label">Password</label>
+                <input type="text" class="form-control" name="password" id="password" maxlength="20" required>
+                <input class="btn" type="submit" value="submit"> 
+              </div>
+            </div>
+          </div>
+  </body>
+</html>

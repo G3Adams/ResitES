@@ -1,0 +1,66 @@
+
+{% load static %} 
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Club Manager</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManager.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+        <!-- Processing Orders -->
+        <div class="details">
+          <div class="clubDetails">
+            <div class="cardHeader">
+              <h2>Request To Cancel Ticket {{ticketId}}</h2>
+            </div>
+            <div class="cardHeader">
+              
+            </div>
+            <p>-------------------------------------------------</p>
+            <p>Ticket ID: {{ticketId}}</p>
+            <p>-------------------------------------------------</p>
+            <p>firstName: {{firstName}}</p>
+            <p>-------------------------------------------------</p>
+            <p>lastName: {{lastName}}</p>
+            <p>-------------------------------------------------</p>
+            <p>userMakingRequest: {{userMakingRequest}}</p>
+            <p>-------------------------------------------------</p>
+            <p>Request Reason: </p>
+            <p>{{requestReason}}</p>
+            <p>-------------------------------------------------</p>
+            <form action="/acceptDenyCancelations/{{cancelId}}/" method="post">
+                {% csrf_token %}
+                <input class="btn" type="submit" name="action" value="submit">
+                <input class="btn" type="submit" name="action" value="delete">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .film-tabs span{
+      text-decoration: underline;
+      padding: 10px 5px;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+  </style>
+  <meta charset="UTF-8">
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <title>Home</title>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="cinema-title">
+      <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+    </div>
+    <nav class="navigate-tab">
+        <a class="active" href="/">Home</a>
+        <p>|</p>
+        <a href="cancellation">cancellation</a>
+        <p>|</p>
+        <a href="studentJoinRequest">request</a>
+        <p>|</p>
+        <a href="loginRedirectBtn">Account Home Page</a>
+        <p>|</p>
+        {% if userIsAnonymous %}
+          <a href="login">login</a>
+        {% else %}
+          <a href="logout">logout</a>
+        {% endif %}
+    </nav>
+  </div> 
+  <div class="main">
+    <div class="adFilm">
+      {% if tierOneFilm %}
+        {% if tierOneFilm.image %}
+        <img src="{{ tierOneFilm.image.url }}" class="regularFilm" data-href="/home/film-detail/{{tierOneFilm.id}}/0"/>
+        {% else  %}
+          <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{tierOneFilm.id}}/0"/>
+        {% endif %}
+      {% else %}
+        <a href="/"><img src="{% static 'css/defaultFilm.jpg' %}" class="adFilmImg"></a>
+      {% endif %}
+    </div>
+    <div class="showFilms">
+      <div class="showFilmsHeader">
+        <div class=film-tabs>
+          <span id="showNow" class="toggleShowTime">Now Showing</span>
+          <span id="showFuture">Coming Soon</span>
+        </div>
+        <nav class="show-all">
+          <a>Show all</a>
+        </nav>
+      </div>
+      <div id="currentShowTime">
+        <div class="films">
+          {% for showtime in currentShowTimes %}
+            {% if showtime.filmId.image %}
+              <img src="{{ showtime.filmId.image.url }}" class="regularFilm" data-href="/home/film-detail/{{showtime.filmId.id}}/1"/>
+            {% else  %}
+              <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{showtime.filmId.id}}/1"/>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div id="futureShowTime" class="hidden">
+        <div class="films">
+          {% for showtime in futureShowTimes %}
+            {% if showtime.filmId.image %}
+              <img src="{{ showtime.filmId.image.url }}" class="regularFilm" data-href="/home/film-detail/{{showtime.filmId.id}}/0"/>
+            {% else  %}
+              <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{showtime.filmId.id}}/0"/>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+
+<script>
+ $(document).ready(function(){
+   $('img').on('click',function(){
+    location.href = $(this).attr('data-href');
+   })
+
+   $('#showNow').on('click',function(){
+    $('#currentShowTime').removeClass('hidden');
+    $('#futureShowTime').addClass('hidden');
+    $('#showNow').addClass('toggleShowTime');
+    $('#showFuture').removeClass('toggleShowTime');
+   })
+  
+   $('#showFuture').on('click',function(){
+    $('#currentShowTime').addClass('hidden');
+    $('#futureShowTime').removeClass('hidden');
+    $('#showNow').removeClass('toggleShowTime');
+    $('#showFuture').addClass('toggleShowTime');
+   })
+ })
+
+</script>

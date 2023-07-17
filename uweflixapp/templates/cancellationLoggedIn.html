@@ -1,0 +1,56 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cancellation</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManagerForm.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="/cancellation">cancellation</a>
+          <p>|</p>
+          <a href="/studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="/loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="/login">login</a>
+          {% else %}
+            <a href="/logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/cancelTicketLoggedIn/{{ticket_id}}/" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+            <h1>Cancellation Form</h1>
+              <br>
+                <label for="inputTitle">Reason for canceling ticket: {{ticketName}}</label>
+                <input type="text" id="requestReason" name="requestReason" maxlength="200" >
+              </br>
+            <input class="btn" type="submit" value="submit"> 
+           </div>
+        </form>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

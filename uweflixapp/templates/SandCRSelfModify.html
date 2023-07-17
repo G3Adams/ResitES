@@ -1,0 +1,176 @@
+{% load static %} 
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <title>Your Account Details</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/userAccountPage.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="/cancellation">cancellation</a>
+          <p>|</p>
+          <a href="/studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="/loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="/login">login</a>
+          {% else %}
+            <a href="/logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/selfModifyAccount" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+
+            <h1>Your Account Details</h1>
+            <br>
+            <p>---------------------------------------------------</p>
+            <p><label for="inputTitle">Your Username: {{userName}}</label></p> 
+            <p><label for="inputTitle">Your Credit: {{credits}}</label></p>
+            <p><label for="inputTitle">Your Discount: {{discountRate}}</label></p>
+            <p>---------------------------------------------------</p>
+            <a href="buyCredit" class="btn">Buy Credit</a>
+            <a href="discountRequest" class="btn">Further Discount Request</a>
+            <p>---------------------------------------------------</p>
+            <h3>Modify Account Details</h3>
+            <div class="UserDetails">
+              <div>
+              <br>
+                <label for="inputTitle">First Name</label>
+                <input type="text" id="firstName" name="firstName" value="{{firstName}}" maxlength="100" >
+              </br>
+              <br>
+                <label for="inputTitle">Last Name</label>
+                <input type="text" id="lastName" name="lastName" value="{{lastName}}" maxlength="100" >
+              </br> 
+              <br>
+                <label for="inputTitle">Birth Date</label>
+                <input type="number" id="birthDay" name="birthDay" value="{{birthDay}}" placeholder="DD" max="31" maxlength="2" />
+                <input type="number" id="birthMonth" name="birthMonth" value="{{birthMonth}}" placeholder="MM" max="12" maxlength="2" >
+                <input type="text" id="birthYear" name="birthYear" value="{{birthYear}}" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" >
+              </br> 
+              <br>
+              <br>
+                <label for="inputTitle">Password</label>
+                <input type="text" id="password" name="password" maxlength="100" >
+              </br>  
+              
+              <br>
+                <label for="inputTitle">Name On Card</label>
+                <input type="text" id="nameOnCard" name="nameOnCard" value="{{nameOnCard}}" maxlength="100" >
+              </br> 
+
+              <br>
+                <label for="inputTitle">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" value="{{cardNumber}}" placeholder="****************" pattern="[0-9]{16}" maxlength="16" >
+              </br> 
+
+              <br>
+                <label for="inputTitle">Month</label>
+                <input type="number" id="month" name="month" value="{{month}}"  placeholder="MM"  pattern="[0-9]{2}" max="12" maxlength="2" >
+              </br> 
+              <br>
+                <label for="inputTitle">Year</label>
+                <input type="text" id="year" name="year" value="{{year}}" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" >
+              </br>
+              </div>
+              <br>
+              <input class="btn" type="submit" value="submit">  
+              </div>
+            </div>          
+          </div>
+        </form>
+        {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+      </div>
+    </div>
+
+      <div class="containerTicket">
+      <div class="mainTicket">
+        <div class="detailsTicket">
+          <div class="TicketDetails">
+            <div class="cardTicketHeader">
+              <h2>Your Tickets</h2>
+            </div>
+            <div class="cardTicketHeader">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Ticket ID</td>
+                  <td>Purchase Date</td>
+                  <td>Showing Room</td>
+                  <td>Showing Date</td>
+                  <td>Start Time</td>
+                  <td>End Time</td>
+                  <td>Cancel Ticket</td>
+                  <td>Request Sent</td>
+                </tr>
+              </thead>
+              {% block content %}
+              {%for ticket in usersTickets%} 
+              <tr>
+                <td>{{ticket.ticketId}}</td>
+                <td>{{ticket.purchaseDate}}</td>
+                <td>{{ticket.showingRoom}}</td>
+                <td>{{ticket.showingDate}}</td>
+                <td>{{ticket.startTime}}</td>
+                <td>{{ticket.endTime}}</td>
+
+                {% if ticket.cancelInProgress in "No" %}
+                <td><a data-href="/cancelTicketLoggedIn/{{ticket.id}}" class="btn">Cancel</a></td>
+                {% endif %}
+
+                {% if ticket.cancelInProgress in "yes" %}
+                <td><a class="btn">Can't Cancel Again</a></td>
+                {% endif %}
+
+                {% if ticket.cancelInProgress in "Request Rejected" %}
+                <td><a class="btn">Can't Cancel Again</a></td>
+                {% endif %}
+
+                <td>{{ticket.cancelInProgress}}</td>
+              </tr>
+              {% endfor %}
+              {% endblock content %}
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const buttons = document.querySelectorAll('a[data-href]');
+        
+        buttons.forEach(buttons =>{
+          buttons.addEventListener("click",()=>{
+            window.location.href = buttons.dataset.href;
+          })
+        })
+      })
+    </script>
+  </body> 
+</html>

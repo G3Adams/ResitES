@@ -1,0 +1,148 @@
+
+{% load static %} 
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Account Manager Home Page</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManager.css' %}">
+      <script type="text/javascript">
+        window.onload=function(){
+          setTodaysDate();
+        }
+     </script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+        <!-- Processing Orders -->
+        <div class="details">
+          <div class="clubDetails">
+            <div class="cardHeader">
+              <h2>Student Clubs</h2>
+              <a href="addClubPost" class="btn">  +</a>
+            </div>
+            <div class="cardHeader">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Club Name</td>
+                  <td>representative</td>
+                  <td>Club Id</td>
+                </tr>
+              </thead>
+              {% block content %}
+              {%for club,rep in clubPair%} 
+              <tr data-href="/club/modifyClub/{{club.id}}">
+                <td>{{club.name}}</td>
+                <td>{{rep}}</td>
+                <td>{{club.id}}</td>
+              </tr>
+              {% endfor %}
+              {% endblock content %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="containerRequests">
+      <!-- main -->
+      <div class="mainRequests">
+        <!-- Processing Orders -->
+        <div class="detailsRequests">
+          <div class="clubRequestsDetails">
+              <h2>Financial Reports:</h2>
+                <form action="/viewDailyTransactions" method="post">
+                  {% csrf_token %}
+                  <div>
+                  <p>Daily Transactions (Input date To View)</p>
+                  <input type="date" id="dayMonthYear" name="dayMonthYear" required>
+                  <input class="btn" type="submit" value="View">     
+                  </div>
+                </form>
+
+                <form action="/monthlyYearlyReport" method="post">
+                  {% csrf_token %}
+                  <div>
+                    <p>Monthly Financial Report (Input Year and month)</p>
+                    <input type="number" id="month" name="month" placeholder="MM" max="12" maxlength="2" required>
+                    <input type="text" id="year1" name="year1" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" required>
+                    <input class="btn" type="submit" value="Generate"> 
+                  </div>
+                </form>
+
+                <form action="/yearlyReport" method="post">
+                {% csrf_token %}
+                <div>
+                  <p>Yearly Financial Report (Input Year)</p>
+                  <input type="text" id="year2" name="year2" placeholder="YYYY" pattern="[0-9]{4}" maxlength="4" required>
+                  <input class="btn" type="submit" value="Generate"> 
+                </div>
+              </form>
+
+                {% if messages %}
+                    <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+</div>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>
+    function setTodaysDate(){
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      today = yyyy + '-' + mm + '-' + dd;
+
+      todayMonthYear = yyyy + '-' + mm;
+      document.getElementById("dayMonthYear").value = today;
+      document.getElementById("month").value = mm;
+      document.getElementById("year1").value = yyyy;
+      document.getElementById("year2").value = yyyy;
+    }     
+      // It Loaded the href with the according ID
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const rows = document.querySelectorAll('tr[data-href]');
+        
+        rows.forEach(row =>{
+          row.addEventListener("click",()=>{
+            window.location.href = row.dataset.href;
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

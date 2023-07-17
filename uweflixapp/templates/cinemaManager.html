@@ -1,0 +1,209 @@
+
+{% load static %} 
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Club Manager</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManager.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="films">Films</a>
+          <p>|</p>
+          <a href="screenManagement">Screen Management</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Processing Orders -->
+        <div class="details">
+          <div class="clubDetails">
+            <div class="cardHeader">
+              <h2>Student Clubs</h2>
+              <a href="addClubPost" class="btn">  +</a>
+            </div>
+            <div class="cardHeader">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Club Name</td>
+                  <td>representative</td>
+                  <td>Club Id</td>
+                </tr>
+              </thead>
+              {% block content %}
+              {%for club,rep in clubPair%} 
+              <tr>
+                <td>{{club.name}}</td>
+                <td>{{rep}}</td>
+                <td>{{club.id}}</td>
+              </tr>
+              {% endfor %}
+              {% endblock content %}
+            </table>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="containerRequests">
+      <!-- main -->
+      <div class="mainRequests">
+
+        <!-- Processing Orders -->
+        <div class="detailsRequests">
+          <div class="clubRequestsDetails">
+            <div class="cardHeaderRequests">
+              <h2>Club Join Requests</h2>
+              
+            </div>
+            
+            <table>
+              <thead>
+                <tr>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Club Name</td>
+                  <td>Club Rep</td>
+                  <td>Student</td>
+                </tr>
+              </thead>
+              {% block content2 %}
+              {%for request in accountRequests%} 
+              <tr>
+                <td>{{request.firstName}}</td>
+                <td>{{request.lastName}}</td>
+                <td>{{request.club}}</td>
+                <td>{{request.is_clubRep}}</td>
+                <td>{{request.is_Student}}</td>
+                <td><a data-href="/acceptUserRequest/{{request.id}}" class="btn">Accept</a></td>
+                <td><a data-href="/declineUserRequest/{{request.id}}" class="btn">Deny</a></td>
+              </tr>
+              {% endfor %}
+              {% endblock content2 %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="containerDiscount">
+      <!-- main -->
+      <div class="mainDiscount">
+
+        <!-- Processing Orders -->
+        <div class="detailsDiscount">
+          <div class="clubDiscountDetails">
+            <div class="cardHeaderDiscount">
+              <h2>Further Discount Requests</h2>
+            </div>
+              
+            <table>
+              <thead>
+                <tr>
+                  <td>Username</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Discount Rate</td>
+                </tr>
+              </thead>
+              {% block content3 %}
+              {%for disRequest in discountRequests%} 
+              <tr>
+                <td>{{disRequest.userName}}</td>
+                <td>{{disRequest.firstName}}</td>
+                <td>{{disRequest.lastName}}</td>
+                <td>{{disRequest.discountRate}}</td>
+                <td><a data-href="/acceptDiscountRequest/{{disRequest.id}}" class="btn">Accept</a></td>
+                <td><a data-href="/declineDiscountRequest/{{disRequest.id}}" class="btn">Deny</a></td>
+              </tr>
+              {% endfor %}
+              {% endblock content3 %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="containerCancel">
+      <!-- main -->
+      <div class="mainCancel">
+
+        <!-- Processing Orders -->
+        <div class="detailsCancel">
+          <div class="clubCancelDetails">
+            <div class="cardHeaderCancel">
+              <h2>Accept/Deny Cancelations Requests</h2>
+            </div>
+              
+            <table>
+              <thead>
+                <tr>
+                  <td>ticketId</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>User Making Request</td>
+                </tr>
+              </thead>
+              {% block content4 %}
+              {%for cancel in cancelationRequests%} 
+              <tr data-href="acceptDenyCancelations/{{cancel.id}}">
+                <td>{{cancel.ticketId}}</td>
+                <td>{{cancel.firstName}}</td>
+                <td>{{cancel.lastName}}</td>
+                <td>{{cancel.userMakingRequest}}</td>
+              </tr>
+              {% endfor %}
+              {% endblock content4 %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>     
+      // It Loaded the href with the according ID
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const rows = document.querySelectorAll('tr[data-href]');
+        
+        rows.forEach(row =>{
+          row.addEventListener("click",()=>{
+            window.location.href = row.dataset.href;
+          })
+        })
+      })
+
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const buttons = document.querySelectorAll('a[data-href]');
+        
+        buttons.forEach(buttons =>{
+          buttons.addEventListener("click",()=>{
+            window.location.href = buttons.dataset.href;
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

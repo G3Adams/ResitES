@@ -1,0 +1,100 @@
+
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Financial Report: {{type}}</title>
+      <link rel="stylesheet" href="{% static 'css/monthlyYearlyReport.css' %}">
+  </head>
+  <body>
+    
+    <div class="container0">
+      <!-- main -->
+      <div class="main0">
+        <!-- Processing Orders -->
+        <div class="details0">
+          <div class="subDetails0">
+                <h1>Financial Report For: {{date}}</h1>
+                <p>Report Type: {{type}}</p>
+                <a href="accountManager" class="btn">Back</a>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="container1">
+      <!-- main -->
+      <div class="main1">
+        <!-- Processing Orders -->
+        <div class="details1">
+          <div class="subDetails1">
+                <h1>Total Revenue: </h1>
+                <p>{{ticketsProfit}}</p>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="container2">
+      <!-- main -->
+      <div class="main2">
+        <!-- Processing Orders -->
+        <div class="details2">
+          <div class="subDetails2">
+                <h1>Tickets Sold: </h1>
+                <p> {{ticketsSold}} Tickets Sold</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container3">
+      <!-- main -->
+      <div class="main3">
+        <!-- Processing Orders -->
+        <div class="details3">
+          <div class="subDetails3">
+                <h1>Cancelations </h1>
+                <h2>Total Loss: </h2>
+                <p class="MEA">{{cancelationTotalLoss}}</p>
+                <h2>Cancelation Ammount: </h2>
+                <p class="TP">{{cancelationAmmount}}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container4">
+      <!-- main -->
+      <div class="main4">
+        <!-- Processing Orders -->
+        <div class="details4">
+          <div class="subDetails4">
+                <h1>User Data</h1>
+                <h2>Guest User Ticket Ammount: </h2>
+                <p class="GUser">{{GuestBought}} Users</p>
+                <h2>Regestered User Ticket Ammount: </h2>
+                <p class="RUser">{{RegisteredBought}} Users</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>     
+      // It Loaded the href with the according ID
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const rows = document.querySelectorAll('tr[data-href]');
+        
+        rows.forEach(row =>{
+          row.addEventListener("click",()=>{
+            window.location.href = row.dataset.href;
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

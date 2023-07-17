@@ -1,0 +1,109 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="cinema-title">
+        <img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo">
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="/cancellation">cancellation</a>
+          <p>|</p>
+          <a href="/studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="/loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          <a href="/login">login</a>
+      </nav>
+    </div> 
+    <div class="main">
+      <div class="filmInfo">
+        <div class="filmInfoContent">
+          <h2>{{film.title}}</h2>
+          <ul>
+            <li>
+              <h3>Age Rating</h3>
+              <p>{{film.ageRating}}</p>
+            </li>
+            <li>
+              <h3>Duration</h3>
+              <p>{{film.duration}}</p>
+            </li>
+            <li>
+              <h3>Description</h3>
+              <p>{{film.desc}}</p>
+            </li>
+            
+          </ul>
+        </div>
+        <div>
+          {% if film.image %}
+            <img src="{{ film.image.url }}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+          {% else  %}
+            <img src="{% static 'css/defaultFilm.jpg' %}" class="regularFilm" data-href="/home/film-detail/{{film.id}}"/>
+          {% endif %}
+        </div>
+      </div>
+      <div class="bookingDays">
+        <ul>
+          {% for key in zippedShowTime %}
+          <li showtime-ref = {{key.0}} year="{{key.2}}" class="select-time-li">
+            <span>{{key.1}}</span>
+            <br>
+            <span>{{key.0}}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% for key,value in showTime.items %}
+      <div id = {{key}} class="screenTime hidden">
+        <ul>
+          {% for screenIdTime in value %}
+            {% for screenId,time in screenIdTime.items%}
+            <li>
+              <button data-href="/{{film.id}}/{{key}}/{{time}}/{{screenId}}">
+                <span>{{time}}</span>
+              </button>
+            </li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+
+
+    $(function(){
+      var thisYear = "1999"
+
+      $('.select-time-li').on('click',function(){
+          let tablist = $(this).attr('showtime-ref');
+          $('.screenTime').addClass("hidden")
+          $(`#${tablist}`).removeClass("hidden")
+          $('.select-time-li').removeClass('toggleDateTime');
+          $(this).addClass('toggleDateTime');
+          $(document).scrollTop($(document).height());
+          thisYear = $(this).attr("year");
+      })
+
+      $('.screenTime button').on('click',function(){
+          document.location.href=$(this).attr('data-href') + `/${thisYear}`
+      })
+        
+    });
+  </script>
+</body>
+</html>

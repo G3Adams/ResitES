@@ -1,0 +1,238 @@
+/* CSS code writen by Benjamin Ell-Jones, writen based on CSS Code by Kuay Tang Zheng */
+.header{
+  display:flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.headerLogo{
+  margin-left: 100px;
+  margin-top: 25px;
+}
+.navigate-tab{
+  display: flex;
+  font-weight: 300;
+  padding:20px
+}
+
+.navigate-tab a{
+  position: relative;
+  margin: 15px 15px;
+  color: rgb(15, 13, 13);
+  text-decoration: none;
+  font-size: 1em;
+}
+:root{
+  --blue: #287bff;
+  --white: #fff;
+  --grey: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+body{
+  min-height: 100vh ;
+  overflow-x:hidden;
+}
+.container{
+  position: relative;
+  width:100%;
+}
+
+/* main */
+.main{
+  position: absolute;
+  width: 100%;
+  background: var(--white);
+}
+
+label {
+  margin: 5px 5px;
+}
+
+input{
+  margin: 15px 15px;
+}
+
+.form-group {
+  margin:auto;
+  width: 100%;
+}
+
+.clubEdit{
+  position:relative;
+  background-color: var(--white);
+  padding: 20px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  min-height: 620px;
+}
+
+.btn{
+  margin-top: 20px;
+  padding: 10px;
+  border-color: #222;
+  background-color: var(--grey);
+}
+
+.clubRepEdit{
+  padding-top: 220px;
+}
+
+#inputFilmTitle{
+  width: 50%;
+}
+
+#inputStreetNo{
+  width: 20%;
+}
+
+#inputStreet {
+  width: 75%;
+}
+
+#inputCity {
+  width: 32%;
+}
+
+#inputState {
+  width: 32%;
+}
+
+#inputPostcode {
+  width: 32%;
+}
+
+#inputCounty {
+  width: 45%;
+}
+
+#inputCountry {
+  width: 50%;
+}
+
+#inputNum{
+  width: 100%;
+}
+
+#inputFirstName{
+  width: 48%;
+}
+
+#inputLastName{
+  width:48%;
+}
+
+#inputDesc{
+  padding-bottom: 40px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.containerRep{
+  top:750px;
+  position: relative;
+  width:100%;
+}
+.containerStudent{
+  top:750px;
+  left:50%;
+  position: relative;
+  width:100%;
+  padding-bottom:30%;
+}
+/* main */
+.mainTableUser{
+  position: absolute;
+  width: 50%;
+  background: var(--white);
+}
+
+.detailsUser .clubUserDetails{
+  position: relative;
+  min-height: 350px;
+  background-color: var(--white);
+  padding:20px;
+  box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+  border-radius: 20px;
+}
+
+.cardHeaderUser{
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cardHeaderUser h2{
+  font-weight: 600;
+  color: var(--black1);
+}
+
+.btn{
+  position: relative;
+  padding: 5px 10px;
+  background: var(--black1);
+  text-decoration: none;
+  color: var(--white);
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.detailsUser table{
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.detailsUser table thead td{
+  font-weight: 600;
+}
+
+.detailsUser .clubUserDetails table tr{
+  color:var(--black1);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.detailsUser .clubUserDetails table tbody tr:hover{
+  background-color: var(--black1);
+  color: var(--white);
+}
+
+.detailsUser .clubUserDetails table tr td{
+  padding: 10px;
+}
+
+.detailsUser .clubUserDetails table tr td:last-child{
+  text-align: end;
+}
+
+.detailsUser .clubUserDetails table tr td:nth-child(3){
+  text-align: center;
+}

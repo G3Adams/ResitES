@@ -1,0 +1,86 @@
+
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Daily Transactions</title>
+      <link rel="stylesheet" href="{% static 'css/cinemaManager.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+        <!-- Processing Orders -->
+        <div class="details">
+          <div class="clubDetails">
+            <div class="cardHeader">
+              <h2>Daily Transactions for {{ticketDate}}</h2>
+              <a href="accountManager" class="btn">Back</a>
+            </div>
+            <div class="cardHeader">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Ticket Id</td>
+                  <td>Film Name</td>
+                  <td>Price</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                </tr>
+              </thead>
+              {% block content %}
+              {%for ticket in tickets%} 
+              <tr>
+                <td>{{ticket.ticketId}}</td>
+                <td>{{ticket.film}}</td>
+                <td>{{ticket.price}}</td>
+                <td>{{ticket.firstName}}</td>
+                <td>{{ticket.lastName}}</td>
+              </tr>
+              {% endfor %}
+              {% endblock content %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>     
+      // It Loaded the href with the according ID
+      document.addEventListener("DOMContentLoaded", ()=>{
+        const rows = document.querySelectorAll('tr[data-href]');
+        
+        rows.forEach(row =>{
+          row.addEventListener("click",()=>{
+            window.location.href = row.dataset.href;
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

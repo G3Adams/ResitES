@@ -1,0 +1,101 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <title>Home</title>
+  <style>
+    .main{
+      display: flex;
+      justify-content: center;
+    }
+    .receipt{
+      background-color: #8B0000;
+      color: white;
+      width: 90%;
+      border-radius: 20px;
+    }
+    .ticketHeader{
+      display:flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .title{
+      display: flex;
+      justify-content: center;
+    }
+    .screenInfo{
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .ticketList{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="cinema-title">
+      <img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo">
+    </div>
+    <nav class="navigate-tab">
+        <a class="active" href="/">Home</a>
+        <p>|</p>
+        <a href="/cancellation">cancellation</a>
+        <p>|</p>
+        <a href="/studentJoinRequest">request</a>
+        <p>|</p>
+        <a href="/loginRedirectBtn">Account Home Page</a>
+        <p>|</p>
+        {% if userIsAnonymous %}
+          <a href="login">login</a>
+        {% else %}
+          <a href="logout">logout</a>
+        {% endif %}
+    </nav>
+  </div> 
+<div class="container">
+    <div class="main">
+      <div class="receipt">
+        <div class="ticketHeader">
+          <div class="title">
+            <h1>{{ShowTimeChild.showTime.filmId.title}}</h1>
+          </div>
+          <div class="screenInfo">
+            <div>
+              <h4>Screen No : {{ShowTimeChild.showTime.screenId.roomNo}}</h4>
+            </div>
+            <div>
+              <h4>Start Time : {{ShowTimeChild.showTime.screeningTime}}</h4>
+            </div>
+            <div>
+              <h4>Show Date : {{ShowTimeChild.date}}</h4>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="ticketList">
+          {% for key,value in ticekt_dict.items %}
+            <div>
+              <h2>{{key}}</h2>
+              {% for ticketNo in value %}
+                <h3>{{ticketNo}}</h3>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

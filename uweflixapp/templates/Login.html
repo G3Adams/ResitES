@@ -1,0 +1,65 @@
+
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Manager</title>
+      <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <div class="cinema-title">
+        <a href="/"><img src="{% static 'css/uweCinemaLogo.png' %}" class="headerLogo"></a>
+      </div>
+      <nav class="navigate-tab">
+          <a class="active" href="/">Home</a>
+          <p>|</p>
+          <a href="cancellation">cancellation</a>
+          <p>|</p>
+          <a href="studentJoinRequest">request</a>
+          <p>|</p>
+          <a href="loginRedirectBtn">Account Home Page</a>
+          <p>|</p>
+          {% if userIsAnonymous %}
+            <a href="login">login</a>
+          {% else %}
+            <a href="logout">logout</a>
+          {% endif %}
+      </nav>
+    </div> 
+    <div class="containerRequests">
+      <!-- main -->
+      <div class="mainRequests">
+        <!-- Processing Orders -->
+        <div class="detailsRequests">
+          <div class="clubRequestsDetails">
+            <form action="/login" method="post">
+              {% csrf_token %}
+              <h1>User Login</h1>
+              <div class="usernameDiv">
+              <input type="text" class="form-control" name="userName" id="userName" placeholder="UserName" maxlength="200" required> 
+              </div>
+              <br></br>
+              <div class="passwordDiv">
+              <input type="text" class="form-control" name="password" id="password" placeholder="Password" maxlength="200" required>
+              </div>
+              <div class="submitDiv">
+              <input class="btn" type="submit" value="Login">     
+              </div>  
+              
+              {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            </form>
+
+              </div>
+            </div>
+          </div>
+      </div>
+  </body>
+</html>

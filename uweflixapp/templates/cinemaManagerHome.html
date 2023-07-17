@@ -1,0 +1,101 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cinema Manager Home</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/cinemaManager.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="title">Home Page</span>
+            </a>
+          </li>
+          <li>
+            <a href="cinemaManager">
+              <span class="title">Club</span>
+            </a>
+          </li>
+          
+          <li>
+            <a href="films">
+              <span class="title">Film</span>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#">
+              <span class="title">Student</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="title">Representative</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="title">Cancelations</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- main -->
+      <div class="main">
+
+        <!-- Processing Orders -->
+        <div class="details">
+          <div class="clubDetails">
+            <div class="cardHeader">
+              <h2>List of Pending Accounts</h2>
+              <a href="editClub.html" class="btn">  +</a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Registration id</td>
+                  <td>Student/Rep</td>
+                  <td>Club Name</td>
+                  <td>Username</td>
+                </tr>
+              </thead>
+              <tr>
+                <td>1</td>
+                <td>Student</td>
+                <td>Avenger</td>
+                <td>Zheng0626</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Student</td>
+                <td>Avenger</td>
+                <td>George</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Student</td>
+                <td>DC</td>
+                <td>Ben</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Student</td>
+                <td>DC</td>
+                <td>Rob</td>
+              </tr>
+            </table>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+      
+  </body>
+</html>

@@ -1,0 +1,153 @@
+.header{
+  display:flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.headerLogo{
+  margin-left: 100px;
+  margin-top: 25px;
+}
+.adFilmImg{
+  height: 55vh;
+}
+.adFilm{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.showFilmsHeader{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+  font-size: x-large;
+}
+.show-all{
+  margin-left: auto;
+}
+
+.films{
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin: auto;
+}
+
+.film-tabs{
+  display:flex;
+  padding:20px;
+  column-gap: 60px;
+}
+
+.show-all{
+  padding:20px;
+}
+
+.navigate-tab{
+  display: flex;
+  font-weight: 300;
+  padding:20px
+}
+
+.navigate-tab a{
+  position: relative;
+  margin: 15px 15px;
+  color: rgb(15, 13, 13);
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.filmInfo{
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin: auto;
+  margin-top: 25px;
+}
+
+.filmInfoContent ul{
+  text-decoration: none;
+  list-style: none;
+}
+
+.bookingDays{
+  background-color: #141B2B;
+  width: 85%;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  max-height: 150px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.bookingDays ul{
+  gap:40px;
+  font-size: larger;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  padding:10px 20px;
+}
+
+.screenTime ul,
+.bookingDays ul{
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.screenTime ul{
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  row-gap: 30px;
+  column-gap: 30px;
+}
+
+.screenTime ul a,
+.bookingDays ul li{
+  text-decoration: none;
+  color: white;
+}
+
+.screenTime{
+  width: 85%;
+  margin: auto;
+  margin-top: 10px;
+  background-color: #D7CBBB;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+}
+
+.screenTime ul li button{
+  padding: 10px 30px;
+  background-color: #C08865;
+  border-radius: 20px;
+  color: white;
+}
+
+.regularFilm{
+  width:184px;
+  height: 274px;
+}
+
+.hidden{
+  display: none;
+}
+
+.toggleShowTime{
+  background-color: black;
+  color:white;
+}
+
+
+.toggleDateTime{
+  background-color: white;
+  color:black !important;
+  padding: 10px 20px;
+}

@@ -1,0 +1,210 @@
+{% load static %} 
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <style>
+        .table {
+          width:100%;
+          border:1px solid #EEEEEE;
+        }
+
+        thead {
+          display:flex;
+          width:100%;
+          background:#000;
+          color:#EEEEEE;
+          padding:(24px/2 * 1.5) 0;
+        }
+
+        tr {
+          display:flex;
+          width:100%;
+          padding:(24px/2 * 1.5) 0;
+          
+        }
+
+        td, thead tr {
+          flex: 1 1 20%;
+          text-align:center;
+        }
+
+        .showTimeTableHeader .addShowTimebtn{
+          font-size: x-large;
+          background-color:cornsilk;
+          border-style: groove;
+        }
+        .logo{
+          margin-top: 2px;
+        }
+
+        .showTimeTableHeader{
+          display: flex;
+          justify-content: end;
+        }
+
+        #inputShowTimeDetails{
+          border-style: groove;
+          margin: 10px 10px;
+        }
+
+        .hidden{
+          display:none !important;
+        }
+
+      </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <title>Manage Club</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/cinemaManagerForm.css' %}">
+  </head>
+  <body>
+    {% if screen %}
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/screenManagement/modify-screen/{{screen.id}}/" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+
+            <h1>Manage Screen</h1>
+            <br>
+            <div class="filmDetail">
+              <div>
+                <label for="inputFilmDuration">Screen Details:</label>
+                <div id="inputFilmDuration">
+                  <label for="inputHour">Room No:</label>
+                  <input type="text" id="inputHour" name="inputRoomNo" maxlength="50" value="{{screen.roomNo}}" required>
+                  <label for="inputMinute">Capacity:</label>
+                  <input type="text" id="inputMinute" name="inputCapacity" maxlength="50" value="{{screen.capacity}}" required>
+                </div>
+                <br>
+              </div>
+            </div>
+
+            <table class="table">
+              
+              <div class="showTimeTableHeader">
+                  <div class="addShowTimebtn">
+                    <span class="icon">
+                      <span class="logo">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                      </span>
+                      <span>Show Time</span>
+                    </span>
+                  </div>
+              </div>
+              <div class="hidden" id="inputShowTimeDetails">
+                <form>  
+                    <label for="inputFilm">Film</label>
+                    <select name="inputFilm" id="films" value="no film"  required>
+                      {% for film in films %}
+                      <option value={{film.id}}>{{film.title}}</option>
+                      {% endfor %}
+                    </select>
+                    <label>Start Date</label>
+                    <input class="setTodaysDate" name="inputStartDate" type="date" required>
+                    <label>End Date</label>
+                    <input class="setTodaysDate" name="inputEndDate" type="date" required>
+                    <label>Set show time</label>
+                    <input type="time" name="inputShowTime" value="00:00" required>
+                    <label>Price:</label>
+                    <input type="text" name="inputPrice" value="5.50" required>
+                    <input type="submit" name='action' value="Add ShowTime">       
+                  
+                </form>
+              </div>
+              {% if messages %}
+                  <ul class="messages">
+                  {% for message in messages %}
+                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+              <thead>
+                <tr>
+                  <td>Film</td>
+                  <td>Start Date</td>
+                  <td>Start Time</td>
+                  <td>End Date</td>
+                </tr>
+              </thead>
+              {% for showTime in showTimes %}
+              <tr>
+                <td>{{showTime.filmId.title}}</td>
+                <td>{{showTime.showDate}}</td>
+                <td>{{showTime.screeningTime|time:"H:i A"}}</td>
+                <td>{{showTime.endDate}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+
+
+            <input class="btn" type="submit" name='action' value="submit">           
+            <input class="btn" type="submit" name="action" value="delete" onclick="deleteAction(event)">     
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+    </div>
+    {% else %}  
+    <div class="container">
+      <!-- main -->
+      <div class="main">
+
+        <!-- Form -->
+        <form action="/addScreenPost" method="post">
+          {% csrf_token %}
+          <div class="form-group clubEdit">
+
+            <h1>Manage Screen</h1>
+            <br>
+            <div class="filmDetail">
+              <div>
+                <label for="inputFilmDuration">Screen Details:</label>
+                <div id="inputFilmDuration">
+                  <label for="inputHour">Room No:</label>
+                  <input type="text" id="inputHour" name="inputRoomNo" maxlength="50" required>
+                  <label for="inputMinute">Capacity:</label>
+                  <input type="text" id="inputMinute" name="inputCapacity" maxlength="50" required>
+                </div>
+                <br>
+              </div>
+            </div>
+
+
+            <input class="btn" type="submit" value="submit">            
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+    {% endif %}
+  </body>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    var today = new Date().toISOString().split('T')[0];
+
+    deleteAction = (e) =>{
+      if(!confirm('Are you sure?')){
+        e.preventDefault();
+      }
+    }
+
+    $(function(){
+        $('.setTodaysDate').attr('min', today);
+        $('.setTodaysDate').attr('value', today);
+        $('.addShowTimebtn').on('click',function(){
+          $('#inputShowTimeDetails').removeClass('hidden');
+        })
+
+    });
+  </script>
+</html>
